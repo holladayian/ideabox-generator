@@ -281,6 +281,10 @@ body {
   background-color: pink;
 }
 
+.hidden {
+  display: none;
+}
+
 /*=== media queries ===*/
 
 @media only screen and (max-width: 400px) {

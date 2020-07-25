@@ -8,11 +8,13 @@ var ideaFormSection = document.querySelector('.idea-form');
 var cardTitle = document.querySelector('.card-title');
 var bodyText = document.querySelector('.body-text');
 var ideaCardSection = document.querySelector('.idea-cards');
+var starFavButton = document.querySelector('.header-star');
 
 var ideaArray = [];
 
 window.addEventListener('keyup', formValidation);
 saveButton.addEventListener('click', createIdeaObject);
+ideaCardSection.addEventListener('click', starFavorite);
 
 function toggleHidden() {
   menuIcon.classList.toggle("hidden");
@@ -22,8 +24,7 @@ function toggleHidden() {
 
 // saveButton.addEventListener('click', formValidation);
 
-
-function reateIdeaObject() {
+function createIdeaObject() {
   var newIdea = new Idea(titleInput.value, bodyInput.value);
   ideaArray.unshift(newIdea);
   displayCard();
@@ -40,7 +41,8 @@ function displayCard() {
       <div class="card">
         <header>
           <button class="header-star" type="button" name="button">
-            <img src="./assets/star-active.svg" alt="">
+            <img class="star-outline" src="./assets/star.svg" alt="">
+            <img class="hidden star-active" src="./assets/star-active.svg" alt="">
           </button>
           <button class="header-close" type="button" name="button">
             <img src="./assets/menu-close.svg" alt="">
@@ -56,7 +58,6 @@ function displayCard() {
       </div>
       `
     )
-
   }
 }
 
@@ -82,4 +83,11 @@ function enableSaveButton() {
 function disableSaveButton() {
   saveButton.classList.add("disable-style");
   saveButton.disabled = true;
+}
+
+function starFavorite() {
+  var starActive = document.querySelector('.star-active');
+  var starOutline = document.querySelector('.star-outline');
+  starActive.classList.toggle("hidden");
+  starOutline.classList.toggle("hidden");
 }
