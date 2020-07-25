@@ -14,17 +14,36 @@ var ideaArray = [];
 
 window.addEventListener('keyup', formValidation);
 saveButton.addEventListener('click', createIdeaObject);
+
 ideaCardSection.addEventListener('click', starFavorite);
+
+ideaCardSection.addEventListener('click', deleteCard);
+
 
 function toggleHidden() {
   menuIcon.classList.toggle("hidden");
   menuCloseIcon.classList.toggle("hidden");
   dropDownMenu.classList.toggle("hidden");
 }
-
 // saveButton.addEventListener('click', formValidation);
 
+
 function createIdeaObject() {
+
+function deleteCard(event) {
+  // console.log(event.target.id);
+  var cardID = Number(event.target.id);
+  for (i = 0; i < ideaArray.length; i++) {
+    if (cardID === ideaArray[i].id) {
+      ideaArray.splice(i, 1);
+    }
+  }
+  displayCard();
+}
+
+
+function createIdeaObject() {
+
   var newIdea = new Idea(titleInput.value, bodyInput.value);
   ideaArray.unshift(newIdea);
   displayCard();
@@ -44,8 +63,8 @@ function displayCard() {
             <img class="star-outline" src="./assets/star.svg" alt="">
             <img class="hidden star-active" src="./assets/star-active.svg" alt="">
           </button>
-          <button class="header-close" type="button" name="button">
-            <img src="./assets/menu-close.svg" alt="">
+          <button id="${ideaArray[i].id}" class="header-close" type="button" name="button">
+            <img id="${ideaArray[i].id}" src="./assets/menu-close.svg" alt="">
           </button>
         </header>
         <section class="card-body">
