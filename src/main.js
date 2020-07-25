@@ -9,10 +9,19 @@ var cardTitle = document.querySelector('.card-title');
 var bodyText = document.querySelector('.body-text');
 var ideaCardSection = document.querySelector('.idea-cards');
 
+var allButtons = document.getElementsByClassName('button');
+
 var ideaArray = [];
 
-window.addEventListener('keydown', formValidation);
-saveButton.addEventListener('click', createIdeaObject);
+window.addEventListener('keyup', formValidation);
+// saveButton.addEventListener('click', createIdeaObject);
+window.addEventListener('click', clickHandler);
+
+function clickHandler(target) {
+  if (event.target === saveButton) {
+    createIdeaObject()
+  }
+}
 
 function toggleHidden() {
   menuIcon.classList.toggle("hidden");
@@ -60,7 +69,7 @@ function displayCard() {
   }
 }
 
-function formValidation() {
+function formValidation(event) {
   if (titleInput.value !== '' && bodyInput.value !== '') {
     enableSaveButton();
   } else {
