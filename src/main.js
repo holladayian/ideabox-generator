@@ -23,7 +23,7 @@ function toggleHidden() {
 // saveButton.addEventListener('click', formValidation);
 
 
-function createIdeaObject() {
+function reateIdeaObject() {
   var newIdea = new Idea(titleInput.value, bodyInput.value);
   ideaArray.unshift(newIdea);
   displayCard();
