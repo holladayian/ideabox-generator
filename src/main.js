@@ -9,38 +9,37 @@ var cardTitle = document.querySelector('.card-title');
 var bodyText = document.querySelector('.body-text');
 var ideaCardSection = document.querySelector('.idea-cards');
 var starFavButton = document.querySelector('.header-star');
-
-var allButtons = document.getElementsByClassName('button');
-
+// var allButtons = document.getElementsByClassName('button');
 var ideaArray = [];
 
 window.addEventListener('keyup', formValidation);
-// saveButton.addEventListener('click', createIdeaObject);
 window.addEventListener('click', clickHandler);
+// saveButton.addEventListener('click', createIdeaObject);
+
+ideaCardSection.addEventListener('click', starFavorite);
+ideaCardSection.addEventListener('click', deleteCard);
+
 
 function clickHandler(target) {
   if (event.target === saveButton) {
     createIdeaObject()
   }
+  if (event.target === starFavButton) {
+    starFavorite()
+  }
+  if (event.target === ideaCardSection) {
+    starFavorite();
+    deleteCard();
+  }
 }
-
-ideaCardSection.addEventListener('click', starFavorite);
-
-ideaCardSection.addEventListener('click', deleteCard);
-
 
 function toggleHidden() {
   menuIcon.classList.toggle("hidden");
   menuCloseIcon.classList.toggle("hidden");
   dropDownMenu.classList.toggle("hidden");
 }
-// saveButton.addEventListener('click', formValidation);
-
-
-function createIdeaObject() {
 
 function deleteCard(event) {
-  // console.log(event.target.id);
   var cardID = Number(event.target.id);
   for (i = 0; i < ideaArray.length; i++) {
     if (cardID === ideaArray[i].id) {
@@ -52,7 +51,6 @@ function deleteCard(event) {
 
 
 function createIdeaObject() {
-
   var newIdea = new Idea(titleInput.value, bodyInput.value);
   ideaArray.unshift(newIdea);
   displayCard();
@@ -114,8 +112,10 @@ function disableSaveButton() {
 }
 
 function starFavorite() {
+  console.log('butts');
   var starActive = document.querySelector('.star-active');
   var starOutline = document.querySelector('.star-outline');
+  if (event.target)
   starActive.classList.toggle("hidden");
   starOutline.classList.toggle("hidden");
 }
