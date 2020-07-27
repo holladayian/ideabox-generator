@@ -33,17 +33,23 @@ function createIdeaObject() {
   disableSaveButton();
 }
 
+function displayStarState() {
+  // if (ideaArray[i].star) {
+  //   return "./assets/star-active.svg";
+  // } else {
+  //   return "./assets/star.svg";
+  // }
+}
 function displayCard() {
   ideaCardSection.innerHTML = '';
-  for (i = 0; i < ideaArray.length; i++) {
+  for (var i = 0; i < ideaArray.length; i++) {
     ideaCardSection.insertAdjacentHTML(
       'afterbegin',
       `
       <div class="card">
         <header>
           <button class="header-star" type="button" name="button">
-            <img id="${ideaArray[i].id}" class="star-outline" src="./assets/star.svg" alt="">
-            <img id="${ideaArray[i].id}" class="hidden star-active" src="./assets/star-active.svg" alt="">
+            <img id="${ideaArray[i].id}" class="star-outline" src="${ideaArray[i].updateIdea()}" alt="">
           </button>
           <button class="header-close" type="button" name="button">
             <img src="./assets/menu-close.svg" alt="">
@@ -96,7 +102,7 @@ function starFavorite(event) {
     if (cardID == ideaArray[i].id) {
       // starActive.classList.toggle("hidden");
       // starOutline.classList.toggle("hidden");
-      ideaArray.star = true;
+      ideaArray[i].star = true;
     }
   }
   displayCard();
