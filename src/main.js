@@ -15,10 +15,8 @@ var ideaArray = [];
 window.addEventListener('keyup', formValidation);
 window.addEventListener('click', clickHandler);
 // saveButton.addEventListener('click', createIdeaObject);
-
-ideaCardSection.addEventListener('click', starFavorite);
-ideaCardSection.addEventListener('click', deleteCard);
-
+// ideaCardSection.addEventListener('click', starFavorite);
+// ideaCardSection.addEventListener('click', deleteCard);
 
 function clickHandler(target) {
   if (event.target === saveButton) {
@@ -48,7 +46,6 @@ function deleteCard(event) {
   }
   displayCard();
 }
-
 
 function createIdeaObject() {
   var newIdea = new Idea(titleInput.value, bodyInput.value);
