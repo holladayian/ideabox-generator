@@ -243,10 +243,19 @@ body {
 }
 
 .idea-cards {
+  /* display: grid;
+  justify-content: center;
+  grid-template-columns: auto;
+  margin: 24px; */
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   padding-left: 25%;
   padding-right: 25%;
+}
+
+.idea-cards div {
+  width: 280px;
 }
 
 .header-star {
@@ -398,7 +407,7 @@ body {
     background-color: rgba(80, 80, 80, 0.65);
   }
 
-  .hidden {
+  .hidden-2 {
     display: none;
   }
 }

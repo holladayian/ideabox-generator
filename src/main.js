@@ -9,14 +9,17 @@ var cardTitle = document.querySelector('.card-title');
 var bodyText = document.querySelector('.body-text');
 var ideaCardSection = document.querySelector('.idea-cards');
 var starFavButton = document.querySelector('.header-star');
+var deleteCardButton = document.querySelector('.header-close');
+
 // var allButtons = document.getElementsByClassName('button');
 var ideaArray = [];
 
 window.addEventListener('keyup', formValidation);
-window.addEventListener('click', clickHandler);
-// saveButton.addEventListener('click', createIdeaObject);
+// window.addEventListener('click', clickHandler);
+saveButton.addEventListener('click', createIdeaObject);
 // ideaCardSection.addEventListener('click', starFavorite);
-// ideaCardSection.addEventListener('click', deleteCard);
+ideaCardSection.addEventListener('click', deleteCard);
+ideaCardSection.addEventListener('click', starCard);
 
 function clickHandler(target) {
   if (event.target === saveButton) {
@@ -25,16 +28,16 @@ function clickHandler(target) {
   if (event.target === starFavButton) {
     starFavorite()
   }
-  if (event.target === ideaCardSection) {
-    starFavorite();
+  if (event.target === deleteCardButton) {
+    // starFavorite();
     deleteCard();
   }
 }
 
 function toggleHidden() {
-  menuIcon.classList.toggle("hidden");
-  menuCloseIcon.classList.toggle("hidden");
-  dropDownMenu.classList.toggle("hidden");
+  menuIcon.classList.toggle("hidden-2");
+  menuCloseIcon.classList.toggle("hidden-2");
+  dropDownMenu.classList.toggle("hidden-2");
 }
 
 function deleteCard(event) {
@@ -42,6 +45,18 @@ function deleteCard(event) {
   for (i = 0; i < ideaArray.length; i++) {
     if (cardID === ideaArray[i].id) {
       ideaArray.splice(i, 1);
+      console.log('butthole2')
+    }
+  }
+  displayCard();
+}
+
+function starCard(event) {
+  console.log('stuff');
+  var cardID2 = Number(event.target.id);
+  for (i = 0; i < ideaArray.length; i++) {
+    if (cardID2 === ideaArray[i].id) {
+      console.log('butthole');
     }
   }
   displayCard();
