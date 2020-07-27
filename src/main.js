@@ -10,6 +10,7 @@ var bodyText = document.querySelector('.body-text');
 var ideaCardSection = document.querySelector('.idea-cards');
 var starFavButton = document.querySelector('.header-star');
 
+
 var ideaArray = [];
 
 window.addEventListener('keyup', formValidation);
@@ -41,8 +42,8 @@ function displayCard() {
       <div class="card">
         <header>
           <button class="header-star" type="button" name="button">
-            <img class="star-outline" src="./assets/star.svg" alt="">
-            <img class="hidden star-active" src="./assets/star-active.svg" alt="">
+            <img id="${ideaArray[i].id}" class="star-outline" src="./assets/star.svg" alt="">
+            <img id="${ideaArray[i].id}" class="hidden star-active" src="./assets/star-active.svg" alt="">
           </button>
           <button class="header-close" type="button" name="button">
             <img src="./assets/menu-close.svg" alt="">
@@ -85,9 +86,20 @@ function disableSaveButton() {
   saveButton.disabled = true;
 }
 
-function starFavorite() {
+function starFavorite(event) {
   var starActive = document.querySelector('.star-active');
   var starOutline = document.querySelector('.star-outline');
-  starActive.classList.toggle("hidden");
-  starOutline.classList.toggle("hidden");
+  var cardID = Number(event.target.id);
+  console.log(cardID);
+  console.log(event.target.id);
+  for (var i = 0; i < ideaArray.length; i++) {
+    if (cardID == ideaArray[i].id) {
+      // starActive.classList.toggle("hidden");
+      // starOutline.classList.toggle("hidden");
+      ideaArray.star = true;
+    }
+  }
+  displayCard();
+  console.log(ideaArray);
+
 }

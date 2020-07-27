@@ -12,6 +12,10 @@ class Idea {
 
   }
   updateIdea() {
-
+    if (this.star = true) {
+      starActive.classList.add("hidden");
+      starOutline.classList.remove("hidden");
+    }
+    console.log(ideaArray);
   }
 };
