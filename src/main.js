@@ -10,11 +10,34 @@ var bodyText = document.querySelector('.body-text');
 var ideaCardSection = document.querySelector('.idea-cards');
 var ideaArray = [];
 
+
+//4.2 add an event listener that fires the retrieve from storage function, on load
 window.addEventListener('keyup', formValidation);
 window.addEventListener('click', clickHandler);
-// saveButton.addEventListener('click', createIdeaObject);
-// ideaCardSection.addEventListener('click', deleteCard);
-// ideaCardSection.addEventListener('click', starFavorite);
+
+
+//4.3 create a function that retrieves from storage
+//4.3 we want to reassign our ideaArray to a value of,
+//4.3 JSON.parse(localStorage.getItem("whatever-the-heck-we-named-it-in-saved-to-storage")) OR an empty string *incase nothing has been stored*
+//4.3 then run our DOM update function *displayCard*
+
+
+//4.6 create a showStarredIdeas function that,
+//4.6  runs through the loop of ideaArray, accessing the indicies that have a key value of "star: true"
+// 4.6 interpolates the DOM
+// 4.6.1 maybe ties this into the current DOM updating function, passing in the parameters if (star)
+
+// 4.7 Add a button to the eventHandler that changes the "Show Starred Ideas" button on the DOM,
+// 4.7 to the "Show Starred Ideas" button
+// 4.8 then run either showStarredIdeas or displayCard, depending on a boolean switch
+
+// 4.9 either run event keydown, or refactor keyup to push through the eventHandler, running a search function
+// 4.9 loop through the ideaArray in the search function
+// 4.9 if ideaArray[i] dot contains the event dot key (might have to look into the syntax of this)
+// 4.9 reupdate the DOM
+// 4.9 either refactor DOM update function or add a new DOM update function to handle the search parameters
+// 4.9 tie this to the event listener
+// 4.9.1 make sure this runs for the delete key as well
 
 
 
@@ -36,21 +59,23 @@ function toggleHidden() {
   dropDownMenu.classList.toggle("hidden-2");
 }
 
-function deleteCard(event) {
-  for (i = 0; i < ideaArray.length; i++) {
-    if (Number(event.target.id) === ideaArray[i].id) {
-      ideaArray.splice(i, 1);
-    }
-  }
-  displayCard();
-}
-
 function createIdeaObject() {
   var newIdea = new Idea(titleInput.value, bodyInput.value);
   ideaArray.unshift(newIdea);
   displayCard();
   clearForm();
   disableSaveButton();
+  //4.0 fire saveToStorage on newIdea
+}
+
+function deleteCard(event) {
+  for (i = 0; i < ideaArray.length; i++) {
+    if (Number(event.target.id) === ideaArray[i].id) {
+      //4.4 fire deleteFromStorage on ideaArray[i] (this might have to go after the splice, idk I'm drunk)
+      ideaArray.splice(i, 1);
+    }
+  }
+  displayCard();
 }
 
 function starBoy(index) {
