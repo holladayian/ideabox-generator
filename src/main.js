@@ -65,7 +65,7 @@ function createIdeaObject() {
   displayCard();
   clearForm();
   disableSaveButton();
-  //4.0 fire saveToStorage on newIdea
+  newIdea.saveToStorage();
 }
 
 function deleteCard(event) {
