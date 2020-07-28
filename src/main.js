@@ -22,10 +22,10 @@ window.addEventListener('click', clickHandler);
 //4.3 then run our DOM update function *displayCard*
 
 function retrieveStoredIdeasArray() {
-  var storedIdeaString = localStorage.getItem(storedIdeas);
-  var parsedIdeaArray = JSON.parse(storedIdeaString);
-  instantiateParsedArray(parsedIdeaArray);
-  return parsedIdeaArray;
+  var storedIdeaString = localStorage.getItem("storedIdeas") || [];
+  ideaArray = JSON.parse(storedIdeaString);
+  instantiateParsedArray(ideaArray);
+  return ideaArray;
 }
 
 function instantiateParsedArray(parsedValue) {
