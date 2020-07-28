@@ -20,8 +20,19 @@ window.addEventListener('click', clickHandler);
 //4.3 we want to reassign our ideaArray to a value of,
 //4.3 JSON.parse(localStorage.getItem("whatever-the-heck-we-named-it-in-saved-to-storage")) OR an empty string *incase nothing has been stored*
 //4.3 then run our DOM update function *displayCard*
+function retrieveStoredIdeasArray() {
+  var storedIdeaString = localStorage.getItem(storedIdeas);
+  var parsedIdeaArray = JSON.parse(storedIdeaString);
+  instantiateParsedArray(parsedIdeaArray);
+  return parsedIdeaArray;
+}
 
-
+function instantiateParsedArray(parsedValue) {
+  for (var i = 0; i < parsedValue.length; i++) {
+    parsedValue[i] = new Idea(title, body);
+  }
+  displayCard();
+}
 //4.6 create a showStarredIdeas function that,
 //4.6  runs through the loop of ideaArray, accessing the indicies that have a key value of "star: true"
 // 4.6 interpolates the DOM
