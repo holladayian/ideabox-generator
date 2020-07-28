@@ -6,7 +6,7 @@ class Idea {
     this.star = false;
   }
   saveToStorage() {
-    retrieveStoredIdeasArray().unshift(this);
+    // ideaArray.unshift(this);
     var stringifiedArray = JSON.stringify(ideaArray);
     localStorage.setItem("storedIdeas", stringifiedArray);
   }

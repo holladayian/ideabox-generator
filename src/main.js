@@ -14,6 +14,7 @@ var ideaArray = [];
 //4.2 add an event listener that fires the retrieve from storage function, on load
 window.addEventListener('keyup', formValidation);
 window.addEventListener('click', clickHandler);
+window.addEventListener('onload', retrieveStoredIdeasArray);
 
 
 //4.3 create a function that retrieves from storage
@@ -21,19 +22,7 @@ window.addEventListener('click', clickHandler);
 //4.3 JSON.parse(localStorage.getItem("whatever-the-heck-we-named-it-in-saved-to-storage")) OR an empty string *incase nothing has been stored*
 //4.3 then run our DOM update function *displayCard*
 
-function retrieveStoredIdeasArray() {
-  var storedIdeaString = localStorage.getItem("storedIdeas") || [];
-  ideaArray = JSON.parse(storedIdeaString);
-  instantiateParsedArray(ideaArray);
-  return ideaArray;
-}
 
-function instantiateParsedArray(parsedValue) {
-  for (var i = 0; i < parsedValue.length; i++) {
-    parsedValue[i] = new Idea(parsedValue[i].title, parsedValue[i].body);
-  }
-  displayCard();
-}
 //4.6 create a showStarredIdeas function that,
 //4.6  runs through the loop of ideaArray, accessing the indicies that have a key value of "star: true"
 // 4.6 interpolates the DOM
@@ -69,6 +58,19 @@ function toggleHidden() {
   menuIcon.classList.toggle("hidden-2");
   menuCloseIcon.classList.toggle("hidden-2");
   dropDownMenu.classList.toggle("hidden-2");
+}
+
+function retrieveStoredIdeasArray() {
+  var storedIdeaString = localStorage.getItem("storedIdeas") || [];
+  ideaArray = JSON.parse(storedIdeaString);
+  instantiateParsedArray(ideaArray);
+}
+
+function instantiateParsedArray(parsedValue) {
+  for (var i = 0; i < parsedValue.length; i++) {
+    parsedValue[i] = new Idea(parsedValue[i].title, parsedValue[i].body);
+  }
+  displayCard();
 }
 
 function createIdeaObject() {
