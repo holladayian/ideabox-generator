@@ -14,7 +14,7 @@ var ideaArray = [];
 //4.2 add an event listener that fires the retrieve from storage function, on load
 window.addEventListener('keyup', formValidation);
 window.addEventListener('click', clickHandler);
-window.addEventListener('onload', retrieveStoredIdeasArray);
+window.addEventListener('onload', retrieveStoredIdeasArray());
 
 
 //4.3 create a function that retrieves from storage
@@ -68,7 +68,7 @@ function retrieveStoredIdeasArray() {
 
 function instantiateParsedArray(parsedValue) {
   for (var i = 0; i < parsedValue.length; i++) {
-    parsedValue[i] = new Idea(parsedValue[i].title, parsedValue[i].body);
+    parsedValue[i] = new Idea(parsedValue[i].title, parsedValue[i].body, parsedValue[i].id, parsedValue[i].star);
     parsedValue[i].saveToStorage();
   }
   displayCard();

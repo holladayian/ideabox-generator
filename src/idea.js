@@ -1,9 +1,9 @@
 class Idea {
-  constructor(title, body) { // might need id and star params here
-    this.id = Date.now();
+  constructor(title, body, id, star) { // might need id and star params here
+    this.id = id || Date.now();
     this.title = title;
     this.body = body;
-    this.star = false;
+    this.star = star || false;
   }
   saveToStorage() {
     // ideaArray.unshift(this);
