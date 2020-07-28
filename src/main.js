@@ -8,29 +8,27 @@ var ideaFormSection = document.querySelector('.idea-form');
 var cardTitle = document.querySelector('.card-title');
 var bodyText = document.querySelector('.body-text');
 var ideaCardSection = document.querySelector('.idea-cards');
-var starFavButton = document.querySelector('.header-star');
 var ideaArray = [];
 
 window.addEventListener('keyup', formValidation);
-saveButton.addEventListener('click', createIdeaObject);
-ideaCardSection.addEventListener('click', deleteCard);
+window.addEventListener('click', clickHandler);
+// saveButton.addEventListener('click', createIdeaObject);
+// ideaCardSection.addEventListener('click', deleteCard);
 // ideaCardSection.addEventListener('click', starFavorite);
 
-// window.addEventListener('click', clickHandler);
 
 
-// function clickHandler(target) {
-//   if (event.target === saveButton) {
-//     createIdeaObject()
-//   }
-//   if (event.target === starFavButton) {
-//     starFavorite()
-//   }
-//   if (event.target === deleteCardButton) {
-//     starFavorite();
-//     deleteCard();
-//   }
-// }
+function clickHandler(event) {
+  if (event.target === saveButton) {
+    createIdeaObject(event);
+  }
+  if (event.target.classList.contains("star")) {
+    starFavorite(event);
+  }
+  if (event.target.classList.contains("close")) {
+    deleteCard(event);
+  }
+}
 
 function toggleHidden() {
   menuIcon.classList.toggle("hidden-2");
@@ -39,23 +37,13 @@ function toggleHidden() {
 }
 
 function deleteCard(event) {
-  var cardID = Number(event.target.id);
   for (i = 0; i < ideaArray.length; i++) {
-    if (cardID === ideaArray[i].id) {
+    if (Number(event.target.id) === ideaArray[i].id) {
       ideaArray.splice(i, 1);
     }
   }
   displayCard();
 }
-
-// function starCard(event) {
-//   var cardID2 = Number(event.target.id);
-//   for (i = 0; i < ideaArray.length; i++) {
-//     if (cardID2 === ideaArray[i].id) {
-//     }
-//   }
-//   displayCard();
-// }
 
 function createIdeaObject() {
   var newIdea = new Idea(titleInput.value, bodyInput.value);
@@ -63,6 +51,14 @@ function createIdeaObject() {
   displayCard();
   clearForm();
   disableSaveButton();
+}
+
+function starBoy(index) {
+  if (ideaArray[index].star) {
+    return "./assets/star-active.svg"
+  } else {
+    return "./assets/star.svg"
+  }
 }
 
 function displayCard() {
@@ -73,11 +69,11 @@ function displayCard() {
       `
       <div class="card">
         <header>
-          <button class="header-star" type="button" name="button">
-            <img id="${ideaArray[i].id}" class="star-outline" src="${ideaArray[i].updateIdea()}" alt="">
+          <button id="${ideaArray[i].id}" class="header-star star" type="button" name="button">
+            <img id="${ideaArray[i].id}" class="star-outline star" src="${starBoy(i)}" alt="">
           </button>
-          <button id="${ideaArray[i].id}" class="header-close" type="button" name="button">
-            <img id="${ideaArray[i].id}" src="./assets/menu-close.svg" alt="">
+          <button id="${ideaArray[i].id}" class="header-close close" type="button" name="button">
+            <img id="${ideaArray[i].id}" class="close" src="./assets/menu-close.svg" alt="">
           </button>
         </header>
         <section class="card-body">
@@ -119,18 +115,9 @@ function disableSaveButton() {
 
 
 function starFavorite(event) {
-  var starActive = document.querySelector('.star-active');
-  var starOutline = document.querySelector('.star-outline');
-  var cardID = Number(event.target.id);
   for (var i = 0; i < ideaArray.length; i++) {
-    if (cardID == ideaArray[i].id) {
-      // starActive.classList.toggle("hidden");
-      // starOutline.classList.toggle("hidden");
-      if (ideaArray[i].star) {
-        ideaArray[i].star = false;
-      } else {
-        ideaArray[i].star = true;
-      }
+    if (Number(event.target.id) == ideaArray[i].id) {
+      ideaArray[i].updateIdea();
     }
   }
   displayCard();
