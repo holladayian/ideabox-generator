@@ -69,6 +69,7 @@ function retrieveStoredIdeasArray() {
 function instantiateParsedArray(parsedValue) {
   for (var i = 0; i < parsedValue.length; i++) {
     parsedValue[i] = new Idea(parsedValue[i].title, parsedValue[i].body);
+    parsedValue[i].saveToStorage();
   }
   displayCard();
 }
