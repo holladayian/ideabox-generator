@@ -12,22 +12,10 @@ class Idea {
 
   }
   updateIdea() {
-  //   if (this.star === true) {
-  //     starActive.classList.add("hidden");
-  //     starOutline.classList.remove("hidden");
-  //   }
-  //   console.log(ideaArray);
-  // }
     if (this.star) {
-      return "./assets/star-active.svg";
+      this.star = false;
     } else {
-      return "./assets/star.svg";
+      this.star = true;
     }
   }
 };
-
-// if (this.star) {
-//   this.star = false;
-// } else {
-//   this.star = true;
-// }
