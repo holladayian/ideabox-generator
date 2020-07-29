@@ -58,7 +58,7 @@ function clickHandler(event) {
   }
   if (event.target === showStarredButton) {
     showStarredIdeas(event);
-    switchView();
+    switchView(event);
   }
   if (event.target === showAllButton) {
     switchView(event);
@@ -176,22 +176,17 @@ function disableSaveButton() {
 
 
 function starFavorite(event) {
-  ideaCardSection.innerHTML = '';
   for (var i = 0; i < ideaArray.length; i++) {
     if (Number(event.target.id) == ideaArray[i].id) {
       ideaArray[i].updateIdea();
       updateLocalStorage();
-      // if show stars is active
-      if (showAllButton.classList.contains('hidden')) {
-        showStarredIdeas();
-      } else {
-        displayCard();
-      }
     }
   }
-  // if (showAllButton.classList.contains('hidden')) {
-  //   displayCard();
-  // }
+  if (showStarredButton.classList.contains('hidden')) {
+    showStarredIdeas();
+  } else {
+    displayCard();
+  }
 }
 
 function showStarredIdeas() {
@@ -210,11 +205,11 @@ function switchView() {
   showStarredButton.classList.toggle("hidden");
 }
 
-function showAllView() {
-  showAllButton.classList.toggle("hidden");
-  showStarredButton.classList.toggle("hidden");
-  displayCard();
-}
+// function showAllView() {
+//   showAllButton.classList.toggle("hidden");
+//   showStarredButton.classList.toggle("hidden");
+//   displayCard();
+// }
 
 function inputSearch() {
   ideaCardSection.innerHTML = '';
