@@ -58,9 +58,11 @@ function clickHandler(event) {
   }
   if (event.target === showStarredButton) {
     showStarredIdeas(event);
+    switchView();
   }
   if (event.target === showAllButton) {
-    showAllView(event);
+    switchView(event);
+    displayCard();
   }
 };
 
@@ -71,8 +73,8 @@ function toggleHidden() {
 }
 
 function retrieveStoredIdeasArray() {
-  var storedIdeaString = localStorage.getItem("storedIdeas") || [];
-  ideaArray = JSON.parse(storedIdeaString);
+  var storedIdeaString = localStorage.getItem("storedIdeas");
+  ideaArray = JSON.parse(storedIdeaString) || [];
   instantiateParsedArray(ideaArray);
 }
 
@@ -174,15 +176,22 @@ function disableSaveButton() {
 
 
 function starFavorite(event) {
+  ideaCardSection.innerHTML = '';
   for (var i = 0; i < ideaArray.length; i++) {
     if (Number(event.target.id) == ideaArray[i].id) {
       ideaArray[i].updateIdea();
       updateLocalStorage();
+      // if show stars is active
+      if (showAllButton.classList.contains('hidden')) {
+        showStarredIdeas();
+      } else {
+        displayCard();
+      }
     }
   }
-  if (showAllButton.classList.contains('hidden')) {
-    displayCard();
-  }
+  // if (showAllButton.classList.contains('hidden')) {
+  //   displayCard();
+  // }
 }
 
 function showStarredIdeas() {
@@ -192,8 +201,13 @@ function showStarredIdeas() {
       htmlInjector(i);
     }
   }
-  showAllButton.classList.remove("hidden");
-  showStarredButton.classList.add("hidden");
+  // showAllButton.classList.remove("hidden");
+  // showStarredButton.classList.add("hidden");
+}
+
+function switchView() {
+  showAllButton.classList.toggle("hidden");
+  showStarredButton.classList.toggle("hidden");
 }
 
 function showAllView() {
