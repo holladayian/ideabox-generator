@@ -81,7 +81,7 @@ function instantiateParsedArray(parsedValue) {
 
 function createIdeaObject() {
   var newIdea = new Idea(titleInput.value, bodyInput.value);
-  ideaArray.unshift(newIdea);
+  ideaArray.push(newIdea);
   displayCard();
   clearForm();
   disableSaveButton();
@@ -213,11 +213,10 @@ function switchView() {
 }
 
 function search() {
-  console.log('braindead');
   ideaCardSection.innerHTML = '';
   for (var i = 0; i < ideaArray.length; i++) {
-    console.log(ideaArray);
-    if (ideaArray[i].title.contains(searchInput.value)) {
+    console.log(ideaArray[i].title);
+    if (ideaArray[i].title.includes(searchInput.value)) {
       ideaCardSection.insertAdjacentHTML(
         'afterbegin',
         `
