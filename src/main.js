@@ -108,39 +108,43 @@ function updateLocalStorage() {
   localStorage.setItem("storedIdeas", stringifiedArray);
 }
 
-function starBoy(index) {
-  if (ideaArray[index].star) {
+function starBoy(indexNum) {
+  if (ideaArray[indexNum].star) {
     return "./assets/star-active.svg"
   } else {
     return "./assets/star.svg"
   }
 }
 
+function htmlInjector(index) {
+  ideaCardSection.insertAdjacentHTML(
+    'afterbegin',
+    `
+    <div class="card">
+      <header>
+        <button id="${ideaArray[index].id}" class="header-star star" type="button" name="button">
+          <img id="${ideaArray[index].id}" class="star-outline star" src="${starBoy(index)}" alt="">
+        </button>
+        <button id="${ideaArray[index].id}" class="header-close close" type="button" name="button">
+          <img id="${ideaArray[index].id}" class="close" src="./assets/menu-close.svg" alt="">
+        </button>
+      </header>
+      <section class="card-body">
+        <h4 class="card-title header-text">${ideaArray[index].title}</h4>
+        <p class="body-text">${ideaArray[index].body}</p>
+      </section>
+      <footer>
+        <button class="footer-button" type="button" name="button"><img class="comment-img" src="./assets/comment.svg" alt=""> Comment</button>
+      </footer>
+    </div>
+    `
+  )
+}
+
 function displayCard() {
   ideaCardSection.innerHTML = '';
   for (var i = 0; i < ideaArray.length; i++) {
-    ideaCardSection.insertAdjacentHTML(
-      'afterbegin',
-      `
-      <div class="card">
-        <header>
-          <button id="${ideaArray[i].id}" class="header-star star" type="button" name="button">
-            <img id="${ideaArray[i].id}" class="star-outline star" src="${starBoy(i)}" alt="">
-          </button>
-          <button id="${ideaArray[i].id}" class="header-close close" type="button" name="button">
-            <img id="${ideaArray[i].id}" class="close" src="./assets/menu-close.svg" alt="">
-          </button>
-        </header>
-        <section class="card-body">
-          <h4 class="card-title header-text">${ideaArray[i].title}</h4>
-          <p class="body-text">${ideaArray[i].body}</p>
-        </section>
-        <footer>
-          <button class="footer-button" type="button" name="button"><img class="comment-img" src="./assets/comment.svg" alt=""> Comment</button>
-        </footer>
-      </div>
-      `
-    )
+    htmlInjector(i);
   }
 }
 
@@ -183,28 +187,7 @@ function showStarredIdeas() {
   ideaCardSection.innerHTML = '';
   for (var i = 0; i < ideaArray.length; i++) {
     if (ideaArray[i].star) {
-      ideaCardSection.insertAdjacentHTML(
-        'afterbegin',
-        `
-        <div class="card">
-          <header>
-            <button id="${ideaArray[i].id}" class="header-star star" type="button" name="button">
-              <img id="${ideaArray[i].id}" class="star-outline star" src="${starBoy(i)}" alt="">
-            </button>
-            <button id="${ideaArray[i].id}" class="header-close close" type="button" name="button">
-              <img id="${ideaArray[i].id}" class="close" src="./assets/menu-close.svg" alt="">
-            </button>
-          </header>
-          <section class="card-body">
-            <h4 class="card-title header-text">${ideaArray[i].title}</h4>
-            <p class="body-text">${ideaArray[i].body}</p>
-          </section>
-          <footer>
-            <button class="footer-button" type="button" name="button"><img class="comment-img" src="./assets/comment.svg" alt=""> Comment</button>
-          </footer>
-        </div>
-        `
-      )
+      htmlInjector(i);
     }
   }
   showAllButton.classList.remove("hidden");
@@ -222,28 +205,7 @@ function inputSearch() {
   for (var i = 0; i < ideaArray.length; i++) {
     // console.log(ideaArray[i].title);
     if (ideaArray[i].title.includes(searchInput.value)) {
-      ideaCardSection.insertAdjacentHTML(
-        'afterbegin',
-        `
-        <div class="card">
-          <header>
-            <button id="${ideaArray[i].id}" class="header-star star" type="button" name="button">
-              <img id="${ideaArray[i].id}" class="star-outline star" src="${starBoy(i)}" alt="">
-            </button>
-            <button id="${ideaArray[i].id}" class="header-close close" type="button" name="button">
-              <img id="${ideaArray[i].id}" class="close" src="./assets/menu-close.svg" alt="">
-            </button>
-          </header>
-          <section class="card-body">
-            <h4 class="card-title header-text">${ideaArray[i].title}</h4>
-            <p class="body-text">${ideaArray[i].body}</p>
-          </section>
-          <footer>
-            <button class="footer-button" type="button" name="button"><img class="comment-img" src="./assets/comment.svg" alt=""> Comment</button>
-          </footer>
-        </div>
-        `
-      )
+      htmlInjector(i);
     }
   }
 }
