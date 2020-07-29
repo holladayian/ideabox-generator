@@ -15,7 +15,7 @@ var searchButton = document.querySelector('.search-button');
 
 var ideaArray = [];
 
-window.addEventListener('keyup', formValidation);
+window.addEventListener('keyup', keyupHandler);
 window.addEventListener('click', clickHandler);
 window.addEventListener('onload', retrieveStoredIdeasArray());
 
@@ -37,6 +37,14 @@ window.addEventListener('onload', retrieveStoredIdeasArray());
 // 4.9.1 make sure this runs for the delete key as well
 
 // Perhaps we can make a function to loop through ideaArray to reduce redundancy?
+function keyupHandler(event) {
+  if (event.target === titleInput || event.target === bodyInput) {
+    formValidation(event);
+  }
+  if (event.target.classList.contains('search-input')) {
+    inputSearch(event);
+  }
+}
 
 function clickHandler(event) {
   if (event.target === saveButton) {
@@ -53,9 +61,6 @@ function clickHandler(event) {
   }
   if (event.target === showAllButton) {
     switchView(event);
-  }
-  if (event.target.classList.contains("search")) {
-    search(event);
   }
 };
 
@@ -212,10 +217,10 @@ function switchView() {
   displayCard();
 }
 
-function search() {
+function inputSearch() {
   ideaCardSection.innerHTML = '';
   for (var i = 0; i < ideaArray.length; i++) {
-    console.log(ideaArray[i].title);
+    // console.log(ideaArray[i].title);
     if (ideaArray[i].title.includes(searchInput.value)) {
       ideaCardSection.insertAdjacentHTML(
         'afterbegin',
