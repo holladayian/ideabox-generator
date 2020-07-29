@@ -9,7 +9,11 @@ Credit all teammates
 
 ### The link to our repo can be found there
 
+[link to repo](https://github.com/timkeresey/ideabox-boilerplate)
+
 ### The link to the project description can be found here
+
+[link to project](https://frontend.turing.io/projects/module-1/ideabox-group.html)
 
 ## Project Overview
 
