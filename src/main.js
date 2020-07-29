@@ -9,6 +9,7 @@ var cardTitle = document.querySelector('.card-title');
 var bodyText = document.querySelector('.body-text');
 var ideaCardSection = document.querySelector('.idea-cards');
 var showStarredButton = document.querySelector('.show-star-button');
+var showAllButton = document.querySelector('.show-all-button');
 var ideaArray = [];
 
 window.addEventListener('keyup', formValidation);
@@ -44,6 +45,9 @@ function clickHandler(event) {
   }
   if (event.target === showStarredButton) {
     showStarredIdeas(event);
+  }
+  if (event.target === showAllButton) {
+    switchView(event);
   }
 };
 
@@ -190,4 +194,12 @@ function showStarredIdeas() {
       )
     }
   }
+  showAllButton.classList.remove("hidden");
+  showStarredButton.classList.add("hidden");
+}
+
+function switchView() {
+  showAllButton.classList.add("hidden");
+  showStarredButton.classList.remove("hidden");
+  displayCard();
 }
