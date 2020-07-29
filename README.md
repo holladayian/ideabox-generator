@@ -45,6 +45,22 @@ We ran into challenges separating DOM and data model, but we were able to overco
 
 ## ScreenShots
 
+This is the desktop view showing all of the saved cards in the array. <br />
+![image of home page](/assets/show-all-column.png)<br />
+<br />
+
+This is the desktop view showing only the starred cards in the array. <br />
+![image of home page](/assets/show-star-view.png)<br />
+<br />
+
+This is the desktop view showing only the searched cards in the array. <br />
+![image of home page](/assets/search-ideabox.png)<br />
+<br />
+
+This is the mobile view. <br />
+![image of home page](/assets/mobile-view.png)<br />
+<br />
+
 ## Credits
 
 Tim Keresey
