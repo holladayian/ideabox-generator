@@ -60,7 +60,7 @@ function clickHandler(event) {
     showStarredIdeas(event);
   }
   if (event.target === showAllButton) {
-    switchView(event);
+    showAllView(event);
   }
 };
 
@@ -180,7 +180,9 @@ function starFavorite(event) {
       updateLocalStorage();
     }
   }
-  displayCard();
+  if (showAllButton.classList.contains('hidden')) {
+    displayCard();
+  }
 }
 
 function showStarredIdeas() {
@@ -194,9 +196,9 @@ function showStarredIdeas() {
   showStarredButton.classList.add("hidden");
 }
 
-function switchView() {
-  showAllButton.classList.add("hidden");
-  showStarredButton.classList.remove("hidden");
+function showAllView() {
+  showAllButton.classList.toggle("hidden");
+  showStarredButton.classList.toggle("hidden");
   displayCard();
 }
 
