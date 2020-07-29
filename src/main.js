@@ -58,7 +58,7 @@ function retrieveStoredIdeasArray() {
 function instantiateParsedArray(parsedValue) {
   for (var i = 0; i < parsedValue.length; i++) {
     parsedValue[i] = new Idea(parsedValue[i].title, parsedValue[i].body, parsedValue[i].id, parsedValue[i].star);
-    parsedValue[i].updateLocalStorage();
+    updateLocalStorage();
   }
   displayCard();
 }
@@ -152,6 +152,7 @@ function starFavorite(event) {
   for (var i = 0; i < ideaArray.length; i++) {
     if (Number(event.target.id) == ideaArray[i].id) {
       ideaArray[i].updateIdea();
+      updateLocalStorage();
     }
   }
   displayCard();
