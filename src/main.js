@@ -15,7 +15,7 @@ var searchButton = document.querySelector('.search-button');
 
 var ideaArray = [];
 
-window.addEventListener('keyup', formValidation);
+window.addEventListener('keyup', keyupHandler);
 window.addEventListener('click', clickHandler);
 window.addEventListener('onload', retrieveStoredIdeasArray());
 
@@ -37,6 +37,14 @@ window.addEventListener('onload', retrieveStoredIdeasArray());
 // 4.9.1 make sure this runs for the delete key as well
 
 // Perhaps we can make a function to loop through ideaArray to reduce redundancy?
+function keyupHandler(event) {
+  if (event.target === titleInput || event.target === bodyInput) {
+    formValidation(event);
+  }
+  if (event.target.classList.contains('search-input')) {
+    inputSearch(event);
+  }
+}
 
 function clickHandler(event) {
   if (event.target === saveButton) {
@@ -52,10 +60,7 @@ function clickHandler(event) {
     showStarredIdeas(event);
   }
   if (event.target === showAllButton) {
-    switchView(event);
-  }
-  if (event.target.classList.contains("search")) {
-    search(event);
+    showAllView(event);
   }
 };
 
@@ -81,7 +86,7 @@ function instantiateParsedArray(parsedValue) {
 
 function createIdeaObject() {
   var newIdea = new Idea(titleInput.value, bodyInput.value);
-  ideaArray.unshift(newIdea);
+  ideaArray.push(newIdea);
   displayCard();
   clearForm();
   disableSaveButton();
@@ -103,39 +108,43 @@ function updateLocalStorage() {
   localStorage.setItem("storedIdeas", stringifiedArray);
 }
 
-function starBoy(index) {
-  if (ideaArray[index].star) {
+function starBoy(indexNum) {
+  if (ideaArray[indexNum].star) {
     return "./assets/star-active.svg"
   } else {
     return "./assets/star.svg"
   }
 }
 
+function htmlInjector(index) {
+  ideaCardSection.insertAdjacentHTML(
+    'afterbegin',
+    `
+    <div class="card">
+      <header>
+        <button id="${ideaArray[index].id}" class="header-star star" type="button" name="button">
+          <img id="${ideaArray[index].id}" class="star-outline star" src="${starBoy(index)}" alt="">
+        </button>
+        <button id="${ideaArray[index].id}" class="header-close close" type="button" name="button">
+          <img id="${ideaArray[index].id}" class="close" src="./assets/menu-close.svg" alt="">
+        </button>
+      </header>
+      <section class="card-body">
+        <h4 class="card-title header-text">${ideaArray[index].title}</h4>
+        <p class="body-text">${ideaArray[index].body}</p>
+      </section>
+      <footer>
+        <button class="footer-button" type="button" name="button"><img class="comment-img" src="./assets/comment.svg" alt=""> Comment</button>
+      </footer>
+    </div>
+    `
+  )
+}
+
 function displayCard() {
   ideaCardSection.innerHTML = '';
   for (var i = 0; i < ideaArray.length; i++) {
-    ideaCardSection.insertAdjacentHTML(
-      'afterbegin',
-      `
-      <div class="card">
-        <header>
-          <button id="${ideaArray[i].id}" class="header-star star" type="button" name="button">
-            <img id="${ideaArray[i].id}" class="star-outline star" src="${starBoy(i)}" alt="">
-          </button>
-          <button id="${ideaArray[i].id}" class="header-close close" type="button" name="button">
-            <img id="${ideaArray[i].id}" class="close" src="./assets/menu-close.svg" alt="">
-          </button>
-        </header>
-        <section class="card-body">
-          <h4 class="card-title header-text">${ideaArray[i].title}</h4>
-          <p class="body-text">${ideaArray[i].body}</p>
-        </section>
-        <footer>
-          <button class="footer-button" type="button" name="button"><img class="comment-img" src="./assets/comment.svg" alt=""> Comment</button>
-        </footer>
-      </div>
-      `
-    )
+    htmlInjector(i);
   }
 }
 
@@ -171,75 +180,34 @@ function starFavorite(event) {
       updateLocalStorage();
     }
   }
-  displayCard();
+  if (showAllButton.classList.contains('hidden')) {
+    displayCard();
+  }
 }
 
 function showStarredIdeas() {
   ideaCardSection.innerHTML = '';
   for (var i = 0; i < ideaArray.length; i++) {
     if (ideaArray[i].star) {
-      ideaCardSection.insertAdjacentHTML(
-        'afterbegin',
-        `
-        <div class="card">
-          <header>
-            <button id="${ideaArray[i].id}" class="header-star star" type="button" name="button">
-              <img id="${ideaArray[i].id}" class="star-outline star" src="${starBoy(i)}" alt="">
-            </button>
-            <button id="${ideaArray[i].id}" class="header-close close" type="button" name="button">
-              <img id="${ideaArray[i].id}" class="close" src="./assets/menu-close.svg" alt="">
-            </button>
-          </header>
-          <section class="card-body">
-            <h4 class="card-title header-text">${ideaArray[i].title}</h4>
-            <p class="body-text">${ideaArray[i].body}</p>
-          </section>
-          <footer>
-            <button class="footer-button" type="button" name="button"><img class="comment-img" src="./assets/comment.svg" alt=""> Comment</button>
-          </footer>
-        </div>
-        `
-      )
+      htmlInjector(i);
     }
   }
   showAllButton.classList.remove("hidden");
   showStarredButton.classList.add("hidden");
 }
 
-function switchView() {
-  showAllButton.classList.add("hidden");
-  showStarredButton.classList.remove("hidden");
+function showAllView() {
+  showAllButton.classList.toggle("hidden");
+  showStarredButton.classList.toggle("hidden");
   displayCard();
 }
 
-function search() {
-  console.log('braindead');
+function inputSearch() {
   ideaCardSection.innerHTML = '';
   for (var i = 0; i < ideaArray.length; i++) {
-    console.log(ideaArray);
-    if (ideaArray[i].title.contains(searchInput.value)) {
-      ideaCardSection.insertAdjacentHTML(
-        'afterbegin',
-        `
-        <div class="card">
-          <header>
-            <button id="${ideaArray[i].id}" class="header-star star" type="button" name="button">
-              <img id="${ideaArray[i].id}" class="star-outline star" src="${starBoy(i)}" alt="">
-            </button>
-            <button id="${ideaArray[i].id}" class="header-close close" type="button" name="button">
-              <img id="${ideaArray[i].id}" class="close" src="./assets/menu-close.svg" alt="">
-            </button>
-          </header>
-          <section class="card-body">
-            <h4 class="card-title header-text">${ideaArray[i].title}</h4>
-            <p class="body-text">${ideaArray[i].body}</p>
-          </section>
-          <footer>
-            <button class="footer-button" type="button" name="button"><img class="comment-img" src="./assets/comment.svg" alt=""> Comment</button>
-          </footer>
-        </div>
-        `
-      )
+    // console.log(ideaArray[i].title);
+    if (ideaArray[i].title.includes(searchInput.value)) {
+      htmlInjector(i);
     }
   }
 }
