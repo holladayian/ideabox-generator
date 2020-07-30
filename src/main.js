@@ -187,6 +187,11 @@ function switchView() {
   showStarredButton.classList.toggle("hidden");
 }
 
+function switchBackToAll() {
+  showAllButton.classList.add("hidden");
+  showStarredButton.classList.remove("hidden");
+}
+
 function inputSearch() {
   ideaCardSection.innerHTML = '';
   for (var i = 0; i < ideaArray.length; i++) {
@@ -194,4 +199,5 @@ function inputSearch() {
       htmlInjector(i);
     }
   }
+  switchBackToAll();
 }
