@@ -7,6 +7,8 @@ Credit all teammates
 
 ### The Link to our github pages can be found here
 
+[link to GitHub Pages](http://timkeresey.github.io/ideabox-boilerplate/)
+
 ### The link to our repo can be found there
 
 [link to repo](https://github.com/timkeresey/ideabox-boilerplate)

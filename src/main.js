@@ -25,38 +25,40 @@ function keyupHandler(event) {
   };
   if (event.target.classList.contains('search-input')) {
     inputSearch(event);
-  };
-};
+  }
+}
 
 function clickHandler(event) {
   if (event.target === saveButton) {
     createIdeaObject(event);
-  };
+  }
   if (event.target.classList.contains("star")) {
     starFavorite(event);
-  };
+  }
   if (event.target.classList.contains("close")) {
     deleteCard(event);
-  };
+  }
   if (event.target === showStarredButton) {
+    switchView(event);
     showStarredIdeas(event);
-  };
+  }
   if (event.target === showAllButton) {
-    showAllView(event);
-  };
-};
+    switchView(event);
+    displayCard(event);
+  }
+}
+
+function retrieveStoredIdeasArray() {
+  var storedIdeaString = localStorage.getItem("storedIdeas");
+  ideaArray = JSON.parse(storedIdeaString) || [];
+  instantiateParsedArray(ideaArray);
+}
 
 function toggleHidden() {
   menuIcon.classList.toggle("hidden-2");
   menuCloseIcon.classList.toggle("hidden-2");
   dropDownMenu.classList.toggle("hidden-2");
-};
-
-function retrieveStoredIdeasArray() {
-  var storedIdeaString = localStorage.getItem("storedIdeas") || [];
-  ideaArray = JSON.parse(storedIdeaString);
-  instantiateParsedArray(ideaArray);
-};
+}
 
 function instantiateParsedArray(parsedValue) {
   for (var i = 0; i < parsedValue.length; i++) {
@@ -64,7 +66,7 @@ function instantiateParsedArray(parsedValue) {
     updateLocalStorage();
   };
   displayCard();
-};
+}
 
 function createIdeaObject() {
   var newIdea = new Idea(titleInput.value, bodyInput.value);
@@ -73,30 +75,30 @@ function createIdeaObject() {
   clearForm();
   disableSaveButton();
   updateLocalStorage();
-};
+}
 
 function deleteCard(event) {
   for (i = 0; i < ideaArray.length; i++) {
     if (Number(event.target.id) === ideaArray[i].id) {
       ideaArray.splice(i, 1);
       updateLocalStorage();
-    };
-  };
-  displayCard();
-};
+    }
+  }
+  checkView();
+}
 
 function updateLocalStorage() {
   var stringifiedArray = JSON.stringify(ideaArray);
   localStorage.setItem("storedIdeas", stringifiedArray);
-};
+}
 
-function starBoy(indexNum) {
+function starActivator(indexNum) {
   if (ideaArray[indexNum].star) {
     return "./assets/star-active.svg";
   } else {
     return "./assets/star.svg";
-  };
-};
+  }
+}
 
 function htmlInjector(index) {
   ideaCardSection.insertAdjacentHTML(
@@ -105,7 +107,7 @@ function htmlInjector(index) {
     <div class="card">
       <header>
         <button id="${ideaArray[index].id}" class="header-star star" type="button" name="button">
-          <img id="${ideaArray[index].id}" class="star-outline star" src="${starBoy(index)}" alt="">
+          <img id="${ideaArray[index].id}" class="star-outline star" src="${starActivator(index)}" alt="">
         </button>
         <button id="${ideaArray[index].id}" class="header-close close" type="button" name="button">
           <img id="${ideaArray[index].id}" class="close" src="./assets/menu-close.svg" alt="">
@@ -120,74 +122,82 @@ function htmlInjector(index) {
       </footer>
     </div>
     `
-  );
-};
+  )
+}
 
 function displayCard() {
   ideaCardSection.innerHTML = '';
   for (var i = 0; i < ideaArray.length; i++) {
     htmlInjector(i);
-  };
-};
+  }
+}
 
 function formValidation(event) {
   if (titleInput.value !== '' && bodyInput.value !== '') {
     enableSaveButton();
   } else {
     disableSaveButton();
-  };
-};
+  }
+}
 
 function clearForm() {
-  event.preventDefault();
   titleInput.value = '';
   bodyInput.value = '';
-};
+}
 
 function enableSaveButton() {
   saveButton.classList.remove("disable-style");
   saveButton.disabled = false;
-};
+}
 
 function disableSaveButton() {
   saveButton.classList.add("disable-style");
   saveButton.disabled = true;
-};
+}
 
 function starFavorite(event) {
   for (var i = 0; i < ideaArray.length; i++) {
     if (Number(event.target.id) == ideaArray[i].id) {
       ideaArray[i].updateIdea();
       updateLocalStorage();
-    };
-  };
-  if (showAllButton.classList.contains('hidden')) {
+    }
+  }
+  checkView();
+}
+
+function checkView() {
+  if (showStarredButton.classList.contains('hidden')) {
+    showStarredIdeas();
+  } else {
     displayCard();
-  };
-};
+  }
+}
 
 function showStarredIdeas() {
   ideaCardSection.innerHTML = '';
   for (var i = 0; i < ideaArray.length; i++) {
     if (ideaArray[i].star) {
       htmlInjector(i);
-    };
-  };
-  showAllButton.classList.remove("hidden");
-  showStarredButton.classList.add("hidden");
-};
+    }
+  }
+}
 
-function showAllView() {
+function switchView() {
   showAllButton.classList.toggle("hidden");
   showStarredButton.classList.toggle("hidden");
-  displayCard();
-};
+}
+
+function switchBackToAll() {
+  showAllButton.classList.add("hidden");
+  showStarredButton.classList.remove("hidden");
+}
 
 function inputSearch() {
   ideaCardSection.innerHTML = '';
   for (var i = 0; i < ideaArray.length; i++) {
     if (ideaArray[i].title.includes(searchInput.value)) {
       htmlInjector(i);
-    };
-  };
-};
+    }
+  }
+  switchBackToAll();
+}

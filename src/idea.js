@@ -5,13 +5,15 @@ class Idea {
     this.body = body;
     this.star = star || false;
   }
+
   saveToStorage() {
-    var stringifiedArray = JSON.stringify(ideaArray);
-    localStorage.setItem("storedIdeas", stringifiedArray);
+
   }
+
   deleteFromStorage() {
 
   }
+  
   updateIdea() {
     if (this.star) {
       this.star = false;
