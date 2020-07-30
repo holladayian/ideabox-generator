@@ -83,7 +83,7 @@ function deleteCard(event) {
       updateLocalStorage();
     }
   }
-  displayCard();
+  checkView();
 }
 
 function updateLocalStorage() {
