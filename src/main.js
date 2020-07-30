@@ -1,3 +1,5 @@
+var ideaArray = [];
+
 var menuIcon = document.querySelector(".menu-icon");
 var menuCloseIcon = document.querySelector(".menu-close-icon");
 var dropDownMenu = document.querySelector(".dropdown-menu");
@@ -12,7 +14,6 @@ var showStarredButton = document.querySelector('.show-star-button');
 var showAllButton = document.querySelector('.show-all-button');
 var searchInput = document.querySelector('.search-input');
 var searchButton = document.querySelector('.search-button');
-var ideaArray = [];
 
 window.addEventListener('keyup', keyupHandler);
 window.addEventListener('click', clickHandler);
@@ -21,7 +22,7 @@ window.addEventListener('onload', retrieveStoredIdeasArray());
 function keyupHandler(event) {
   if (event.target === titleInput || event.target === bodyInput) {
     formValidation(event);
-  }
+  };
   if (event.target.classList.contains('search-input')) {
     inputSearch(event);
   }
@@ -38,12 +39,12 @@ function clickHandler(event) {
     deleteCard(event);
   }
   if (event.target === showStarredButton) {
-    showStarredIdeas(event);
     switchView(event);
+    showStarredIdeas(event);
   }
   if (event.target === showAllButton) {
     switchView(event);
-    displayCard();
+    displayCard(event);
   }
 }
 
@@ -63,7 +64,7 @@ function instantiateParsedArray(parsedValue) {
   for (var i = 0; i < parsedValue.length; i++) {
     parsedValue[i] = new Idea(parsedValue[i].title, parsedValue[i].body, parsedValue[i].id, parsedValue[i].star);
     updateLocalStorage();
-  }
+  };
   displayCard();
 }
 
@@ -93,9 +94,9 @@ function updateLocalStorage() {
 
 function starActivator(indexNum) {
   if (ideaArray[indexNum].star) {
-    return "./assets/star-active.svg"
+    return "./assets/star-active.svg";
   } else {
-    return "./assets/star.svg"
+    return "./assets/star.svg";
   }
 }
 
